@@ -2,12 +2,12 @@
 
 :root{
     --mainBgColor:rgba(20,20,31,11);
-    --secondaryBgColor:rgba(27,27,39,1);
+    --secondaryBgColor:rgb(40, 40, 53);
     --borderColor1:rgba(40,41,57,1);
     --borderColor2:rgba(79,86,105,1);
     --textColorMain:#fff;
     --textColorSecondary:rgb(226, 227, 232);
-    --themeColorMain:rgba(219,26,90,1);
+    --themeColorMain:rgb(236, 38, 104);
     --themeColorSecondary:#386fd2;
 }
 
@@ -157,11 +157,11 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
 }
 
 .message--body{
-  padding: 0.5em 0;
+  padding: 0.55em 0;
   color: var(--textColorSecondary);
   background-color: var(--themeColorMain);
-  padding: 1em;
-  border-radius: 20px;
+  padding: 0.8em;
+  border-radius: 30px;
   width:fit-content;
   max-width: 100%;
   word-wrap: break-word; /* added */
