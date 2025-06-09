@@ -1,12 +1,13 @@
 import Room from "./components/Room"
-import './App.css'
+import './index.css'
 
 const App = () => {
   return (
    <>
     <div >
       
-      Neon Message
+   <h1 className="chat-heading">Neon Message</h1>
+
       
     <Room />
 
