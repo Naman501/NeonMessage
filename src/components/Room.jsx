@@ -1,6 +1,6 @@
 import {  useState,useEffect} from "react"
 import {DATABASE_ID ,COLLECTION_ID_MESSAGES, databases} from "../appwrite"
-import {ID} from 'appwrite'
+import {ID , Query} from 'appwrite'
 
 const Room = () => {
 
@@ -32,7 +32,9 @@ const Room = () => {
     }
 
     const getMessages = async () => {
-          const response =  await databases.listDocuments(DATABASE_ID , COLLECTION_ID_MESSAGES);
+          const response =  await databases.listDocuments(DATABASE_ID , COLLECTION_ID_MESSAGES,  [
+            Query.orderDesc('$createdAt')
+          ]);
           console.log('Response is : ',response);
           setMessages(response.documents)
     }
