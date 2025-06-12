@@ -144,53 +144,79 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   justify-content: flex-end;
 }
 
-.message--wrapper{
+/* Refine message layout gap and vertical compactness */
+.message--wrapper {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  gap: 0.5em;
-  margin:1em;
+  gap: 0.2em; /* tighter spacing */
+  margin: 0.5em 0 1em;
 }
 
-.message--header{
+/* Align timestamp and delete icon inline & spaced properly */
+.message--header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.message--body{
-  padding: 0.55em 0;
+  font-size: 0.75rem;
   color: var(--textColorSecondary);
-  background-color: var(--themeColorMain);
-  padding: 0.8em;
-  border-radius: 30px;
-  width:fit-content;
-  max-width: 100%;
-  word-wrap: break-word; /* added */
+  margin-bottom: 0.25rem;
+  padding: 0 0.5rem;
 }
 
-.message--body--owner{
-  border: 1px solid rgba(219,26,90,1);
+/* Style for each message bubble */
+.message--body {
+  padding: 0.45em 1em;
+  color: #fff;
+  background-color: var(--themeColorMain);
+  border-radius: 999px; /* fully pill-shaped */
+  width: fit-content;
+  max-width: 80%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(236, 38, 104, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.message--body:hover {
+  transform: scale(1.01);
+}
+
+/* Optional: adjust owner message look */
+.message--body--owner {
+  border: 1px solid rgba(219, 26, 90, 0.3);
   background-color: var(--secondaryBgColor);
 }
 
-.message-timestamp{
-  margin-left: 1em;
-  color: rgb(164, 161, 161);
-}
-
-.delete--btn{
-  color:#8db3dd;
+/* Trash (delete) button styling */
+#trash {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s;
-  width: 16px;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.delete--btn:hover{
-  color:red;
+#trash:hover {
+  color: #ff4d4d;
+  transform: scale(1.2);
 }
 
+/* Add animation to message entry */
+.message--body {
+  animation: slideIn 0.3s ease;
+}
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 .chat-heading {
@@ -205,7 +231,6 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
 .chat-heading {
   animation: glow 1.5s ease-in-out infinite alternate;
 }
-
 @keyframes glow {
   from {
     text-shadow: 0 0 10px #00ffff;
@@ -213,4 +238,9 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   to {
     text-shadow: 0 0 20px #00ffff, 0 0 20px #00ffff;
   }
+}
+
+.message-timestamp{
+  margin-left: 1em;
+  color: rgb(164, 161, 161);
 }

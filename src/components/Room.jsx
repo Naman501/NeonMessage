@@ -1,6 +1,7 @@
 import {  useState,useEffect} from "react"
 import {DATABASE_ID ,COLLECTION_ID_MESSAGES, databases} from "../appwrite"
 import {ID , Query} from 'appwrite'
+import {Trash2} from 'react-feather'
 
 const Room = () => {
 
@@ -24,7 +25,7 @@ const Room = () => {
         payload
       )
 
-      console.log(response);
+      console.log("Look here : ",response);
       
       setMessages(prevState => [response , ...prevState])
 
@@ -39,6 +40,13 @@ const Room = () => {
           console.log('Response is : ',response);
           setMessages(response.documents)
     }
+
+    const deleteMessage = async (message_id)=>{
+            databases.deleteDocument(
+              DATABASE_ID , COLLECTION_ID_MESSAGES , message_id)
+                setMessages(prevState => prevState.filter(message=> message.$id !== message_id))
+    }
+
   return ( 
    <>
     <main className="container">
@@ -61,7 +69,9 @@ const Room = () => {
             <div key={message.$id} className="message--wrapper">
 
               <div className="message--header">
-                <small className="message-timestamp">{message.$createdAt}</small>
+                <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString()}
+                  <Trash2 id='trash' onClick={()=>{deleteMessage(message.$id)}} />
+                </small>
               </div>
               <div className="message--body">
                 <span>{message.body }</span>
