@@ -1,5 +1,5 @@
 import {  useState,useEffect} from "react"
-import {DATABASE_ID ,COLLECTION_ID_MESSAGES, databases} from "../appwrite"
+import {client,DATABASE_ID ,COLLECTION_ID_MESSAGES, databases} from "../appwrite"
 import {ID , Query} from 'appwrite'
 import {Trash2} from 'react-feather'
 
@@ -9,7 +9,29 @@ const Room = () => {
 
    useEffect(()=>{
             getMessages()
-    },[])
+
+         const unsubscribe =    client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`, response => {
+    // Callback will be executed on changes for documents A and all files.
+    // console.log("Real-time : ",response);
+
+    if(response.events.includes("databases.*.collections.*.documents.*.create")){
+      console.log("A MESSAGE WAS CREATED!");
+      setMessages(prevState => [response.payload, ...prevState])
+  }
+
+if(response.events.includes("databases.*.collections.*.documents.*.delete")){
+    console.log("A MESSAGE WAS DELETED!!!");
+    setMessages(prevState => prevState.filter(message => message.$id !== response.payload.$id));
+  }
+
+
+ 
+});          
+ 
+ return ()=>{
+    unsubscribe()
+  }
+},[])
 
   const [messageBody,setMessageBody]=useState('');
    
@@ -27,7 +49,6 @@ const Room = () => {
 
       console.log("Look here : ",response);
       
-      setMessages(prevState => [response , ...prevState])
 
       setMessageBody('') // reset the page
     }
@@ -44,7 +65,7 @@ const Room = () => {
     const deleteMessage = async (message_id)=>{
             databases.deleteDocument(
               DATABASE_ID , COLLECTION_ID_MESSAGES , message_id)
-                setMessages(prevState => prevState.filter(message=> message.$id !== message_id))
+                // setMessages(prevState => prevState.filter(message=> message.$id !== message_id))
     }
 
   return ( 
@@ -65,11 +86,19 @@ const Room = () => {
       </form>
       <div>
         {
+          
           messages.map(message=>
             <div key={message.$id} className="message--wrapper">
 
               <div className="message--header">
-                <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString()}
+                <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString(
+                  'en-IN', {
+  hour: '2-digit',
+  minute: '2-digit',
+  day: 'numeric',
+  month: 'short',
+}
+                )}
                   <Trash2 id='trash' onClick={()=>{deleteMessage(message.$id)}} />
                 </small>
               </div>
