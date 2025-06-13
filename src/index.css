@@ -244,3 +244,13 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   margin-left: 1em;
   color: rgb(164, 161, 161);
 }
+
+.login-dabba{
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 400px;
+  background-color: red;
+}
